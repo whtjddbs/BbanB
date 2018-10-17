@@ -1,0 +1,399 @@
+@charset "UTF-8";
+
+.detail_category{
+   margin-bottom : 20px;
+   width: 100%;
+}
+.detail_category > ul {
+   margin: 0px auto;
+    width: 320px;
+    overflow: hidden;
+    height: auto;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}
+.detail_category > ul > li {width:160px; float:left; overflow: hidden; height: auto; align-items: center; align-content: center; align-self: center;}
+
+
+.category1 select{
+   margin-right: 3px;
+   float: left;
+    width: 160px;
+    padding: .8em .5em;
+    font-family: inherit;
+    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;
+    border: 1px solid #999;
+    border-radius: 0px;
+    -webkit-appearance: none;}
+
+.category2 select{
+   margin-right: 3px;
+   float: left;
+    width: 160px;
+    padding: .8em .5em;
+    font-family: inherit;
+    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;
+    border: 1px solid #999;
+    border-radius: 0px;
+    -webkit-appearance: none;}
+
+.postLayout{
+   margin-top : 20px;
+}
+.item_detail_view {
+    float: right;
+    margin-right: 10px;
+}
+
+.image {
+   margin-bottom:50px;
+   width: 100%;
+}
+
+img.imagebox {
+    margin-left: 10px;
+    width: 48%;
+}
+
+.name {
+   margin: 0px;
+    padding: 20px 0px;
+    border-top: 3px solid #333;
+    font-weight: 600;
+}
+
+.item_detail_view{
+   align: center;
+   width: 48%;
+   heigt: 500px;
+}
+
+.selbx{
+    width: 100%;
+    vertical-align: top;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    height: 40px;
+    padding: 0px;
+    margin-top : 10px;
+    
+}
+
+.selbx select {
+   width: 100%;
+   height: 40px;
+   margin: 0px;
+   padding: 0px;
+   outline: none;
+}
+
+.shopbag{
+    font-weight: 600;
+    background: #fff;
+    color: #000;
+    border: 1px solid #d4d4d4;
+    float: left;
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    font-family: campton;
+    color: #333;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top : 10px;
+}
+.buyNow{
+   background: #000;
+   float: left;
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    font-family: campton;
+    color: #fff;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top : 10px;
+}
+.sale {
+   padding-bottom: 15px;
+   margin-bottom: 15px;
+   border-bottom: 1px solid rgb(228, 228, 228);
+}
+.noSale {
+   font-size: 22px;
+    line-height: 26px;
+    font-weight: 600;
+}
+.o{
+   font-size: 16px;
+    font-weight: 500;
+    text-decoration: line-through;
+    color: #a0a0a0;
+}
+.s{
+   font-size: 22px;
+    font-weight: 600;
+    color: #ff4800;
+   }
+.policy {
+    width: 500px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 22px;
+    padding-bottom: 15px;
+}
+.policy li {
+   display: list-item;
+    text-align: -webkit-match-parent
+}
+
+
+
+.btnTop span{
+   display: block;
+    overflow: hidden;
+    width: 8px;
+    height: 11px;
+    margin: 0 auto;
+    background: url(//img.29cm.co.kr/next29cm/icon_scroll.png) no-repeat;
+    background-size: 18px 11px;
+    line-height: 100em;
+    vertical-align: top;
+   
+}
+
+
+.accodionbx{
+    border-bottom: 1px solid #d4d4d4;
+    position: relative;
+    width: 100%;
+    padding: 17px 0px 15px 0px;
+    font-size: 17px;
+    color: #303033;
+    text-align: left;
+
+
+}
+.productInfo {
+   display: inline-block;vertical-align: top;box-sizing: border-box;
+   font-size: 20px; background: #333;color: #000;
+    border: 1px solid #333; float: left;
+    width: 100%; height: 50px; line-height: 50px;
+    color: #fff; display: inline-block; position: relative;
+    text-align: center; vertical-align: top;
+    box-sizing: border-box; outline: none;
+    margin-bottom: 20px;
+
+}
+.deliveryInfo{
+   display: inline-block;vertical-align: top;box-sizing: border-box;
+   font-size: 20px; background: #333;color: #000;
+    border: 1px solid #333; float: left;
+    width: 100%; height: 50px; line-height: 50px;
+    color: #fff; display: inline-block; position: relative;
+    text-align: center; vertical-align: top;
+    box-sizing: border-box; outline: none;
+    margin-bottom: 20px;
+}
+
+.sizeInfo{
+   display: inline-block;vertical-align: top;box-sizing: border-box;
+   font-size: 20px; background: #333;color: #000;
+    border: 1px solid #333; float: left;
+    width: 100%; height: 50px; line-height: 50px;
+   color: #fff; display: inline-block; position: relative;
+    text-align: center; vertical-align: top;
+    box-sizing: border-box; outline: none;
+    margin-bottom: 20px;
+}
+
+.infoTbl div{
+   text-align: center;
+}
+
+.tblarea2{
+   width: 100%;
+   margin: 14px 0 0;
+    border: 2px solid #333;
+    border-width: 0 1px 1px 0;
+    border-top: 4px solid #000;
+    border-left: 2px solid #d4d4d4;
+    border-right: 2px solid #d4d4d4;
+    border-bottom: 2px solid #d4d4d4;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
+.tblarea2 table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+.tblarea2 th{
+   height:30px;
+   border-right: 2px solid #d4d4d4;
+   border-bottom: 2px solid #d4d4d4;
+}
+.tblarea2 td{
+   height:30px;
+   border-right: 2px solid #d4d4d4;
+   border-bottom: 2px solid #d4d4d4;
+}
+
+
+
+
+.itemInfo{
+   display: inline-block;vertical-align: top;box-sizing: border-box;
+   font-size: 20px; background: #333;color: #000;
+    border: 1px solid #333; float: left;
+    width: 100%; height: 50px; line-height: 50px;
+    font-family: campton; color: #fff;
+    display: inline-block; position: relative;
+    text-align: center; vertical-align: top;
+    box-sizing: border-box; outline: none;
+    margin-bottom: 30px;
+}
+.itemTblarea{
+   margin: 14px 0 0;
+    border: 2px solid #333;
+    border-width: 0 1px 1px 0;
+    border-top: 4px solid #000;
+    border-left: 2px solid #d4d4d4;
+    border-right: 2px solid #d4d4d4;
+    border-bottom: 2px solid #d4d4d4;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
+.itemTblarea table{
+   margin-left:50px;
+   margin-right:50px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+.itemTblarea th{
+   height:50px;
+   border-right: 2px solid #d4d4d4;
+   border-bottom: 2px solid #d4d4d4;
+}
+.itemTblarea td{
+   height:50px;
+   border-right: 2px solid #d4d4d4;
+   border-bottom: 2px solid #d4d4d4;
+}
+.itemTblarea td:nth-child(odd) {width: 30%;}
+.itemTblarea td:nth-child(even) {width: 70%;}
+
+
+.delInfo{
+   border-bottom: 5px solid #333;
+   margin-top: 20px;
+}
+
+.asInfo{
+   border-bottom: 5px solid #333;
+}
+
+
+.information{
+   margin-top: 50px;
+   border-bottom: 1px solid #d4d4d4;
+}
+
+
+.dscBx{
+border-bottom: 5px solid #333;
+overflow: visible;
+height: 70px;
+}
+.productReply{
+   width: 70px;
+   height: 32px;
+   float: right;
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    line-height: 70px;
+}
+
+.code{
+   margin-left :20px;
+   margin-top :20px;
+}
+
+.askInfo{
+   border-right: 3px solid #d4d4d4;
+}
+
+.dscBx .qnAList li a{
+   color: #a0a0a0;
+}
+
+.dscBx .qnAList li a:hover{
+   color: #333;
+   font-weight:bold;
+}
+.dscBx .askInfo li.active a{
+   color: #333;
+   font-weight:bold;
+   position: relative;
+   height: 100%;
+}
+
+
+.dscBx .qnAList>li>a span{
+   padding: 0 25px;
+}
+.qnAList{
+   font-size:15px;
+}
+
+.askInfo .qnAList li {
+    float: left;
+}
+
+
+.qnAList a{
+   padding:20px;
+   color: #000000;
+   text-decoration: none;
+   line-height: 70px;
+   
+}
+
+.itemDetailInfo{
+   display: inline-block;vertical-align: top;box-sizing: border-box;
+   font-size: 20px; background: #333;color: #000;
+    border: 1px solid #333; float: left;
+    width: 100%; height: 50px; line-height: 50px;
+    font-family: campton; color: #fff;
+    display: inline-block; position: relative;
+    text-align: center; vertical-align: top;
+    box-sizing: border-box; outline: none;
+    margin-bottom: 10px;
+}
+
+
+
+ul{list-style:none; padding-left:0px;}

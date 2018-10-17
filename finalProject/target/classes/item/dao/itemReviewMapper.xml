@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="itemReviewSQL">
+ 	<!-- 리뷰 작성가능 리스트 -->
+ 	<select id="reviewAvailableList" parameterType="map" resultType="map">
+ 		select * from(
+				select rownum rn, tt.* from(
+ 		select serial, seq, main_codename, img, item.name, color, size1, size2, logtime 
+ 		from buylist
+		join serialmapper using (serial)
+		join item using (seq)
+		where id=#{id} and status='배송완료'
+		and logtime > sysdate-90
+		and (serial,seq) not in 
+		(select serial,seq from item_review where id=#{id})
+		order by logtime)tt
+				) where rn between ${startNum} and ${endNum}
+ 	</select>
+ 	<select id="reviewAvailableListTotalA" parameterType="String" resultType="int">
+ 		select count(*) 
+ 		from buylist
+		join serialmapper using (serial)
+		join item using (seq)
+		where id=#{id} and status='배송완료'
+		and logtime > sysdate-90
+		and (serial,seq) not in 
+		(select serial,seq from item_review where id=#{id})
+ 	</select>
+ 	
+ 	<!-- 작성한 리뷰 리스트-->
+ 	<select id="reviewList" parameterType="map" resultType="map">
+ 		select * from(
+				select rownum rn, tt.* from(
+ 		select serial, seq, main_codename, img, item.name, color, size1, size2, item_review.logtime
+ 		from buylist
+		join serialmapper using (serial)
+		join item using (seq)
+        join item_review using (seq,serial)
+		where buylist.id=#{id} and status='배송완료'
+		and (serial,seq) in 
+		(select serial,seq from item_review where id=#{id})
+        order by logtime desc)tt
+				) where rn between ${startNum} and ${endNum}
+ 	</select>
+ 	<select id="reviewListTotalA" parameterType="String" resultType="int">
+ 		select count(*)
+ 		from buylist
+		join serialmapper using (serial)
+		join item using (seq)
+		where id=#{id} and status='배송완료'
+		and logtime > sysdate-90
+		and (serial,seq) in 
+		(select serial,seq from item_review where id=#{id})
+ 	</select>
+ 	
+ 	<!-- 리뷰 상세보기 -->
+ 	<select id="getReviewDetail" parameterType="map" resultType="item_review">
+ 		select * from item_review where id=#{id} and serial=#{serial} and seq=${seq}
+ 	</select>
+ 	
+ 	<!-- 관리자 - 상품후기목록 -->
+ 	<select id="itemReviewList" parameterType="java.util.Map" resultType="java.util.Map">
+	 	select * from(
+				select rownum rn, tt.* from(
+					select * from item_review join item using(seq) order by logtime desc)tt
+				) where rn between ${startNum} and ${endNum}
+ 	</select>
+ 	
+ 	<select id="getItemReviewTotalA" resultType="int">
+ 		select count(*) from item_review
+ 	</select>
+ 	
+ 	<!-- 상품정보에서 상품후기 작성 -->
+ 	<select id="CheckItemViewReview" parameterType="java.util.Map" resultType="java.util.Map">
+        select serial,status
+ 		from buylist
+		join serialmapper using (serial)
+		join item using (seq)
+		where id=#{id} and seq=#{seq}
+		and logtime > sysdate-90 
+		and status = '배송완료'
+		and (serial,seq) not in 
+		(select serial,seq from item_review where id=#{id})
+ 	</select>
+ 	
+ 	<insert id="itemViewReview2" parameterType="java.util.Map">
+ 		insert into item_review values (#{serial},#{seq},#{id},#{starCnt},#{comments},#{img},sysdate)
+ 	</insert>
+ 	<update id="MemberPoint" parameterType="int">
+ 		update member set point = point+${point} where id=#{id}			
+ 	</update>
+ 	
+ 	<!-- 아이템리뷰 하나씩 삭제 -->
+ 	<delete id="reviewOneDelete" parameterType="java.util.Map">
+ 		delete item_review where seq=${seq} and serial=#{serial}
+ 	</delete>
+ </mapper>
