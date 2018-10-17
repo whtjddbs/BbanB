@@ -1,0 +1,159 @@
+<속옷쇼핑몰_BbanB>
+
+- 사용 전 DB.txt 내용을 DB에 임포트해주세요
+
+- 접속 URL
+	http://localhost:8080/finalProject/main/index.do
+	관리자 계정 : admin/admin
+
+* 상세한 내용은 PPT를 참조해주세요
+
+-실행방법(회원)
+- 회원가입
+    (1) 'LOGIN'을 누르면 로그인 페이지로 이동, 회원가입 버튼을 클릭
+	 CREATE TABLE member (
+    		 name      VARCHAR2(15) NOT NULL,
+    		 id        VARCHAR2(40) PRIMARY KEY, -- 비회원 : guest+guest_seq
+    		 pwd       VARCHAR2(80) NOT NULL,
+   		 tel1      VARCHAR2(5) NOT NULL,
+   		 tel2      VARCHAR2(5) NOT NULL,
+   		 tel3      VARCHAR2(5) NOT NULL,
+   		 email     VARCHAR2(60) NOT NULL,
+   		 zipcode   VARCHAR2(6) NOT NULL,
+    		 addr1     VARCHAR2(250) NOT NULL,
+   		 addr2     VARCHAR2(250),
+   		 code      NUMBER DEFAULT 0, -- 0: 일반회원 1:비회원 9: 관리자
+   		 lev       NUMBER DEFAULT 0, -- 0: green 1: yellow 2: orange 3: red 4: vip
+   		 point     NUMBER DEFAULT 0,
+   		 logtime   DATE DEFAULT SYSDATE
+	);
+	--> id를 주키로 잡았으며 이름, 아이디, 비밀번호, 핸드폰 번호, 이메일, 우편번호, 주소, 상세주소를 입력하게 된다. 
+	- 비밀번호는 조건에 맞지 않으면 '사용할 수 없다'라는 경고 메세지가 뜬다.(아이디, 비밀번호등 유효성 검사)
+	- 이메일 인증 : 입력한 이메일로 인증번호가 발송되고 받은 인증번호를 입력해야 가입이 가능해진다.
+	- 주소찾기 : Daum API를 사용하였으며, 우편번호와 주소1은 클릭 시 자동으로 들어가게 되고, 회원은 상세주소만 따로 입력하면 된다.
+- 로그인    
+1) 회원 로그인        
+ 회원가입한 아이디와 비밀번호로 로그인이 가능하며, '로그인 상태 유지'클릭 시 일정 기간동안 아이디와 비밀번호가 저장되, 따로 로그인할 필요가 없다.
+        - 아이디 찾기 : 아이디를 분실 시, 회원가입한 이름과 이메일을 입력하면 입력한 이메일로 인증번호가 발송되고 인증번호 입력시, 사용한 아이디를 볼 수 있다.
+        - 비밀번호 찾기 : 아이디 찾기와 비슷하게 진행되며, 다른점은 비밀번호는 가입했던 비밀번호를 보여주는것이 아니라 새로운 비밀번호를 입력하게 된다.
+2) 관리자 로그인
+관리자로 로그인 시, 메뉴바 우측 상단에 'MY PAGE'탭 대신에 'ADMIN'이라는 탭이 보인다.  (관리자로 로그인했다는 뜻이다.)
+
+- 물건주문 / 상품
+	CREATE TABLE item (
+    		seq             NUMBER PRIMARY KEY,
+   		name            VARCHAR2(100) NOT NULL,
+    		price           NUMBER NOT NULL,
+   		main_codename   VARCHAR2(60) NOT NULL,
+    		sub_codename   VARCHAR2(60) NOT NULL,
+    		img             varchar2(100) not null,
+    		discount       NUMBER DEFAULT 0 -- 40% 할인은 0.4
+	);
+	-->상품은 크게 main_codename(브라, 팬티, 남자, 스포츠)로 나뉘며, 세부적으로 sub_codename(push up, demi, trunk, leggings...)로 나뉜다.
+	create table item_content(
+		seq references item(seq) on delete cascade,
+		img varchar2(1000) not null,
+		material varchar2(200) not null,
+		color varchar2(200) not null,
+		item_size varchar2(200) default '상세참조',
+		company varchar2(200) not null,
+		country varchar2(200) not null,
+		caution varchar2(200) not null,
+		manu_date varchar2(200) not null,
+		Qas varchar2(200) not null, -- 품질보증기준
+		as_tel varchar2(200) not null
+	);
+	--> 아이템 상세페이지(itemView)에서 상품에 관련된 상세 정보(이미지, 색깔, 사이즈, 제조회사, 나라, 주의할 점 등)를 볼 수 있다.
+	CREATE TABLE buylist (
+   		serial   varchar2(100) PRIMARY KEY, --to_char(sysdate, 'YYYYMMDD')||buylist_seq.nextval
+   		id       references member (id) on delete set null,
+   		name      VARCHAR2(15) NOT NULL,
+  		tel1      VARCHAR2(5) NOT NULL,
+   		tel2      VARCHAR2(5) NOT NULL,
+   		tel3      VARCHAR2(5) NOT NULL,
+   		email     VARCHAR2(60) NOT NULL,
+   		zipcode   VARCHAR2(6) NOT NULL,
+   		addr1     VARCHAR2(250) NOT NULL,
+   		addr2     VARCHAR2(250),
+   		parcel	varchar2(100),
+   		parcel_code	varchar2(300),
+   		comments	varchar2(1500),
+   		point	NUMBER DEFAULT 0,
+   		status	varchar2(30) default '준비중',
+   		logtime   date default sysdate
+	);
+	--> 구매한 상품은 buylist에 저장되며, id는 member 테이블을 참조한다. 
+	
+-선택한 상품은 SHOPPINGBAG에 들어가며, 하트를 누른 상품은 wishlist(MY HEART)로 들어간다.
+	create table shoppingbag (
+ 		seq        references item (seq) on delete cascade,
+ 		id          references member (id) on delete cascade,
+ 		color      VARCHAR2(60) NOT NULL,
+ 		size1	VARCHAR2(60) NOT NULL, -- 브라: 32, 34, 36 ... 나머지: S, M, L
+ 		size2	VARCHAR2(60), -- 브라: A, B, C ...
+ 		count	NUMBER NOT NULL,
+ 		deadline date default sysdate+60
+	);
+
+	create table wishlist (
+ 		seq   references item (seq) on delete cascade,
+ 		id    references member (id) on delete cascade
+	);
+- 결제가 완료 된 상품은 취소도 가능하다. ('준비중'단계부터는 취소가 불가능하며 1:1문의를 통해서만 가능하다)
+	CREATE TABLE refundrequest (
+   		serial	REFERENCES buylist (serial),
+  		type  VARCHAR2(100) NOT NULL,
+   		title	VARCHAR2(300) NOT NULL,
+   		content	VARCHAR2(1500) NOT NULL,
+  		img	VARCHAR2(300),
+   		startdate	DATE DEFAULT SYSDATE,
+   		enddate	DATE,
+   		status	VARCHAR2(100)
+	);
+	--> 배송상태가 '결제완료'인 상품은 위에' 상품취소>'버튼이 활성화 되며 버튼을 클릭 하면 상품 취소가 된다. 
+
+
+-회원은 '공지사항'페이지에서 관리자가 올려놓은 공지사항을 읽기만 가능하며, 관리자는 공지사항 수정, 삭제, 업로드가 가능하며,
+ 당일 입력한 글에 대해서만 제목 옆에 하루동안 'new'아이콘이 붙는다. 
+	(공지사항은 footer(화면 가장 아래)에 작은 사이즈로 어떤 페이지에서도 볼 수 있다.)
+	create table notice (
+ 		seq     number primary key,
+ 		title   varchar2(200) not null,
+ 		content varchar2(3000) not null,
+ 		logtime date default sysdate
+	);
+
+
+
+-비회원의 상품주문은 회원과 동일하게 진행되며, 단 상품에 하트 기능은 사용할 수 없으며, 주문 페이지에서도 기본정보(이름, 주소 등)는
+들어가있지 않다. 
+
+-관리자는 상품의 재고 수정이 가능하다.
+	CREATE TABLE item_info (
+    		seq		REFERENCES item (seq) ON DELETE CASCADE,
+    		item_seq	NUMBER PRIMARY KEY,
+    		color		VARCHAR2(60) NOT NULL,
+    		size1		VARCHAR2(60) NOT NULL, -- 브라: 32, 34, 36 ... 나머지: S, M, L
+    		size2		VARCHAR2(60), -- 브라: A, B, C ...
+    		qty             NUMBER DEFAULT 0
+	);
+
+-1:1문의는 회원이 관리자에게 직접 문의하는 곳으로 질문한 회원과 관리자만 볼 수 있다.
+	create table direct_ask (
+ 		seq	number primary key,
+ 		type    varchar2(30) not null, -- 배송문의, 취소문의, 교환/환불문의
+ 		serial  varchar2(100), --reference 제거
+ 		id      references member (id) on delete cascade,
+ 		title   VARCHAR2(200) NOT NULL,
+ 		content VARCHAR2(1500) NOT NULL,
+ 		reply VARCHAR2(1500),
+ 		img VARCHAR2(100),
+ 		logtime  DATE DEFAULT SYSDATE
+	);
+
+-FAQ는 자주하는 질문등 회원들이 전부 읽을 수 있다. 
+	CREATE TABLE faq (
+    		type      VARCHAR2(30) NOT NULL, -- 주문결제, 배송, 취소/환불, 반품교환, 기타
+    		title     VARCHAR2(200) NOT NULL,
+    		content   VARCHAR2(1500) NOT NULL
+	);
